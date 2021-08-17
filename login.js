@@ -1,8 +1,7 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, TextInput, Dimensions, SafeAreaView, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
+import PhoneInput  from 'react-native-phone-number-input';
 const {height} =Dimensions.get('screen');
 const height_logo = height* 0.28;
 
@@ -19,19 +18,17 @@ export default function login() {
              </View>
             <View style={styles.footer}>
                 <Text style={{fontSize: 18}}>Chào mừng bạn đến với </Text>
-                <Text style={{fontSize : 30 , fontWeight:'bold', marginTop: 10}}>THE COFFEE HOUSE</Text>
-                <TextInput
-                    style={styles.input}
+                <Text style={{fontSize : 30 , fontWeight:'bold', marginBottom:30}}>THE CoFFEE HoUSE</Text>
+                <PhoneInput
                     onChangeText={onChangeNumber}
                     value={number}
                     placeholder="Nhập số điện thoại"
-                    keyboardType="numeric"
                 />
                 <TouchableOpacity style={{
                     height: 50, backgroundColor: '#FF7F24',
                     width: 280,
                     margin: 10,
-                    marginTop: 10,
+                    marginTop: 30,
                     padding: 10, borderTopLeftRadius: 5,
                     borderTopRightRadius: 5,
                     borderBottomLeftRadius: 5,
@@ -67,7 +64,7 @@ export default function login() {
                 }}>
                     <Text style={{ fontSize: 15 }}> <Icon name="google-plus-official" size={20} color="black" />  Tiếp tục bằng Google</Text>
                 </TouchableOpacity>
-                <Text style={{marginTop: 20}}>Tiếng Việt</Text>
+                <Text style={{marginTop: 10}}>Tiếng Việt</Text>
             </View>
 
 
@@ -101,17 +98,5 @@ const styles = StyleSheet.create({
     logo: {
         height: height_logo,
         width: '100%',
-    },
-    input: {
-        height: 50,
-        width: 280,
-        margin: 12,
-        borderWidth: 0.3,
-        padding: 10,
-        marginTop: 30,
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
-        borderBottomLeftRadius: 5,
-        borderBottomRightRadius: 5,
     },
 })
