@@ -1,110 +1,215 @@
-import React from 'react'
-import { View, button, Touchable, Text, FlatList, SafeAreaView, Image, StyleSheet, TouchableOpacity } from 'react-native'
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-]
-export default function Cart() {
+import * as React from 'react';
+import { Image, View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
+import HomeScreen from './scr/screens/Home';
+import OrderScreen from './scr/screens/Order';
+import ShopScreen from './scr/screens/Shop';
+import SpecialScreen from './scr/screens/Special';
+import OtherScreen from './scr/screens/Other';
+import { ScreenStackHeaderRightView } from 'react-native-screens';
 
-  const renderItem = ({ item }) => (
-    <View style={{ flex: 1, margin: 5 }}>
-      <View>
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-        <Image
-          style={{ height: 150, width: '100%' }}
-          source={{
-            uri: 'https://lh3.googleusercontent.com/proxy/tecWr6A1m6cFWvkcDHMYopITyFmQgzK7ukwRPCwhdipH-7u9V5A1oF0bm4C9OZdsJPx9CU-Ioao2DR-f70MS63zPgXUJLiX0Klz0zL_eZr-EGvndRrHf-fHXjvk--Ks4uw8OAmZ17MEHJIDQPsV0R2t5RMqk9U3K4YmeDtoojx8',
-          }}
-        />
-      </View>
-      <View style={{ flexDirection: "row" }}>
-        <View>
-          <Text style={{ fontSize: 23, marginTop: 20, fontWeight: 'bold' }}>Textured Cotton Skort </Text>
-          <Text style={{ fontSize: 23, marginTop: 20, fontWeight: 'bold' }}>$19.99</Text>
-        </View>
-      </View>
-      <View style={styles.lineStyle} />
-      <View>
-        <Text style={{ fontSize: 20, marginTop: 25 }}> Color: black  </Text>
-      </View>
-      <View style={{ flexDirection: 'row' }}>
-        <View style={{
-          alignItems: 'center', marginTop: 10, borderWidth: 3,
-          backgroundColor: 'white', height: 50, width: 50, borderRadius: 50 / 2, justifyContent: 'center'
-        }}>
-          <View style={{ backgroundColor: 'black', borderWidth: 3, borderColor: 'white', height: 46, width: 46, borderRadius: 46 / 2 }}></View>
-        </View>
 
-        <View style={{
-          alignItems: 'center', marginTop: 10, marginLeft: 5,
-          backgroundColor: 'yellow', height: 46, width: 46, borderRadius: 50 / 2, justifyContent: 'center', borderColor: 'white',
-        }}>
-        </View>
+export default function App() {
 
-      </View>
-      <Text style={{ fontSize: 20, marginTop: 20 }}>Size:</Text>
-      <View style={{
-        flexDirection: 'row', marginTop: 10,
-        justifyContent: 'space-around'
-      }}>
-        <Text style={{ height: 35, width: 55, borderWidth: 0.5, fontSize: 17, alignItems: 'center', textAlign: 'center' }}>XL</Text>
-        <Text style={{ height: 35, width: 55, borderWidth: 0.5, fontSize: 17, alignItems: 'center', textAlign: 'center' }}>L</Text>
-        <Text style={{ height: 35, width: 55, borderWidth: 2.5, borderColor: 'yellow', fontSize: 17, alignItems: 'center', textAlign: 'center' }}>M</Text>
-        <Text style={{ height: 35, width: 55, borderWidth: 0.5, fontSize: 17, alignItems: 'center', textAlign: 'center' }}>S</Text>
-        <Text style={{ height: 35, width: 55, borderWidth: 0.5, fontSize: 17, alignItems: 'center', textAlign: 'center' }}>XS</Text>
-      </View>
-      <TouchableOpacity style={{
-        justifyContent: 'center', marginTop: 10, paddingBottom: 10, flex: 0.5, alignItems: 'center',
-        backgroundColor: 'yellow', height: 50, width: 400, borderWidth: 1
-      }}>
-        <Text style={{ fontSize: 20, fontWeight: 'bold' }}>ADD TO CART</Text>
-      </TouchableOpacity>
-    </View>
-  )
   return (
-    <View>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', borderRightWidth: 1 }}>
-            <Text style={{ fontSize: 18 }}>Textured Cotton Skort </Text>
-          </View>
-        </View>
-        <FlatList
-          style={{ marginTop: 20 }}
-          data={DATA}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
 
-        />
-    </View>
+            if (route.name === 'Trang chủ') {
+              iconName = focused
+                ? 'home'
+                : 'home-outline';
+            } else if (route.name === 'Đặt hàng') {
+              iconName = focused ? 'cafe' : 'cafe-outline';
+            }
+            else if (route.name === 'Cửa hàng') {
+              iconName = focused ? 'today' : 'today-outline';
+            }
+            else if (route.name === 'Ưu đãi') {
+              iconName = focused ? 'document-text' : 'document-text-outline';
+            }
+            else if (route.name === 'Khác') {
+              iconName = focused ? 'menu' : 'menu-outline';
+            }
+
+
+            // You can return any component that you like here!
+            return <Icon name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: '#FF7F24',
+          tabBarInactiveTintColor: 'gray',
+        })}
+      >
+        <Tab.Screen name="Trang chủ" component={HomeScreen} options={{
+          headerTitle: () =>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}> <Icon name="person" size={22} color="#FF7F24" /> xin chào, Tùng  </Text>,
+          headerRight: () =>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={styles.Custom} >
+                <Text>
+                  <Icon name="document-text-outline" size={25} color="#FF7F24" />
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.Custom1} >
+                <Text>
+                  <Icon name="notifications-outline" size={25} color="black" />
+                </Text>
+              </TouchableOpacity>
+            </View>
+        }} />
+
+        <Tab.Screen name="Đặt hàng" component={OrderScreen} options={{
+          headerTitle: () =>
+
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity style={{ flexDirection: 'row', marginTop: 5 }}>
+                <Image
+                  style={{ height: 30, width: 50 }}
+                  source={{
+                    uri: 'https://cdn.ntlogistics.vn/images/NTX/new_images/danh-gia-shipper-giao-hang-nhanh-qua-viec-dam-bao-an-toan-hang-hoa.jpg'
+                  }} />
+                <View style={{ flexDirection: 'column' }}>
+                  <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Giao hàng tận giường  <Icon name="chevron-down-outline" size={18} color="black" /></Text>
+                  <Text>Các sản phẩm sẽ được giao nhanh nhất có thể</Text>
+                </View>
+              </TouchableOpacity>
+              <View style={{ flexDirection: 'row' }}>
+                <TextInput
+                  style={styles.input1}
+                  placeholder='Cà Phê Gói- Cà Phê Uống Liền '
+
+
+                />
+                <TouchableOpacity style={styles.icon}>
+                  <Icon name="search-outline" size={20} color="black" />
+
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.icon}>
+                  <Icon name="heart-outline" size={20} color="black" />
+
+                </TouchableOpacity>
+
+              </View>
+            </View>
+
+          ,
+
+
+
+
+
+          headerStyle: {
+            height: 100
+          },
+
+        }} />
+        <Tab.Screen name="Cửa hàng" component={ShopScreen} options={{
+          headerTitle: () =>
+            <View style={{ flex: 1, flexDirection: 'column' }}>
+              <Text style={{ marginTop: 10, fontSize: 20, fontWeight: 'bold' }} >Cửa Hàng</Text>
+              <View style={styles.input}>
+                <TextInput
+                  style={{ flex: 1 }}
+                  placeholder='Tìm kiếm'
+                />
+                <TouchableOpacity style={{ marginTop: 10, marginRight: 5 }}>
+                  <Icon name="search-outline" size={18} color="#D3D3D3" />
+                </TouchableOpacity>
+              </View>
+            </View>,
+
+          headerStyle: {
+            height: 100
+          },
+          headerRight: () =>
+            <View style={{ flexDirection: 'column' }}>
+              <View style={{ flexDirection: 'row', flex: 1 }}>
+                <TouchableOpacity style={styles.Custom} >
+                  <Text>
+                    <Icon name="document-text-outline" size={25} color="#FF7F24" />
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.Custom1} >
+                  <Text>
+                    <Icon name="notifications-outline" size={25} color="black" />
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style={{ marginBottom: 15 }}>
+                <Text style={{ fontSize: 18 }}> <Icon name="map-outline" size={18} color="black" /> Bản đồ </Text>
+              </TouchableOpacity>
+            </View>
+        }} />
+        <Tab.Screen name="Ưu đãi" component={SpecialScreen} options={{
+
+          headerRight: () =>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={styles.Custom} >
+                <Text>
+                  <Icon name="document-text-outline" size={25} color="#FF7F24" />
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.Custom1} >
+                <Text>
+                  <Icon name="notifications-outline" size={25} color="black" />
+                </Text>
+              </TouchableOpacity>
+            </View>
+        }} />
+        <Tab.Screen name="Khác" component={OtherScreen} options={{
+          headerRight: () =>
+            <View style={{ flexDirection: 'row' }}>
+              <TouchableOpacity style={styles.Custom} >
+                <Text>
+                  <Icon name="document-text-outline" size={25} color="#FF7F24" />
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.Custom1} >
+                <View>
+                  <Icon name="notifications-outline" size={25} color="black" />
+                </View>
+              </TouchableOpacity>
+            </View>
+        }} />
+      </Tab.Navigator>
+    </NavigationContainer >
   )
 }
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection:'column',
-    justifyContent:'center',
-    alignItems:'stretch',
-
-
-
+  Custom: {
+    alignItems: 'center', marginRight: 10, color: 'white', borderWidth: 2.7, borderColor: '#F8F8FF',
+    height: 40, width: 40, borderRadius: 50 / 2, justifyContent: 'center'
   },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+  Custom1: {
+    alignItems: 'center', marginRight: 15, borderWidth: 2.7, borderColor: '#F8F8FF',
+    height: 40, width: 40, borderRadius: 50 / 2, justifyContent: 'center'
   },
-  title: {
-    fontSize: 32,
+  input: {
+    height: 40, flexDirection: 'row',
+    width: 250,
+    borderWidth: 0.2,
+    marginTop: 15, borderTopLeftRadius: 7, borderTopRightRadius: 7, borderBottomLeftRadius: 7, borderBottomRightRadius: 7
   },
-  lineStyle: {
-    borderWidth: 0.3,
-    borderColor: 'black',
-    marginTop: 50,
-
+  input1: {
+    height: 35, backgroundColor: '#F5F5F5',
+    width: 280,
+    marginTop: 15, borderTopLeftRadius: 7, borderTopRightRadius: 7, borderBottomLeftRadius: 7, borderBottomRightRadius: 7
   },
+  icon: {
+    height: 35, backgroundColor: '#F5F5F5',
+    width: 35, alignItems: 'center', justifyContent: 'center', marginLeft: 10,
+    marginTop: 15, borderTopLeftRadius: 7, borderTopRightRadius: 7, borderBottomLeftRadius: 7, borderBottomRightRadius: 7
+  }
 
 
-});
+})
