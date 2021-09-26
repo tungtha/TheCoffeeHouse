@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import Icon from 'react-native-vector-icons/Ionicons';
 export default function Other() {
     return (
-        <ScrollView style={{ flexDirection: 'column', flex: 1 }}>
+        <ScrollView style={{ flexDirection: 'column', flex: 1 }} showsVerticalScrollIndicator={false}>
             <View style={{ marginTop: 10 }}>
                 <Text style={{ margin: 15, fontSize: 20, fontWeight: 'bold' }}>Tiện ích</Text>
                 <View style={{ flexDirection: 'row' }}>
@@ -63,7 +63,7 @@ export default function Other() {
                             <Icon name="chevron-forward-outline" size={15} color="black" />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ margin: 15, flexDirection: 'row'}}>
+                    <TouchableOpacity style={{ margin: 15, flexDirection: 'row' }}>
                         <Icon name="star-outline" size={20} color="black" />
                         <Text style={{ fontSize: 16, marginLeft: 15, marginBottom: 15 }}>Cài đặt</Text>
                         <View style={{ marginLeft: 232 }}>
